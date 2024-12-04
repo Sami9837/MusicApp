@@ -36,6 +36,19 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  List<Widget> _pages() => [
+        HomePageContent(
+          songs: songs,
+          onPlaySong: playSong,
+        ),
+        const Center(
+            child: Text('Search Page', style: TextStyle(color: Colors.white))),
+        const Center(
+            child: Text('Library Page', style: TextStyle(color: Colors.white))),
+        const Center(
+            child: Text('Profile Page', style: TextStyle(color: Colors.white))),
+      ];
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -44,7 +57,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    var _pages;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -58,7 +70,7 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      body: _pages[_selectedIndex],
+      body: _pages()[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
@@ -86,6 +98,115 @@ class _HomePageState extends State<HomePage> {
             label: 'Profile',
           ),
         ],
+      ),
+    );
+  }
+}
+
+class HomePageContent extends StatelessWidget {
+  final List<dynamic> songs;
+  final Function(dynamic) onPlaySong;
+
+  const HomePageContent({
+    Key? key,
+    required this.songs,
+    required this.onPlaySong,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: 50,
+              decoration: BoxDecoration(
+                color: const Color(0xFF2A2B4D),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Row(
+                children: const [
+                  SizedBox(width: 12),
+                  Icon(Icons.search, color: Colors.white),
+                  SizedBox(width: 8),
+                  Expanded(
+                    child: TextField(
+                      style: TextStyle(color: Colors.white),
+                      decoration: InputDecoration(
+                        hintText: 'Search',
+                        hintStyle: TextStyle(color: Colors.grey),
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                  Icon(Icons.mic, color: Colors.white),
+                  SizedBox(width: 12),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+            const Text('Checkout the Latest Songs!',
+                style: TextStyle(color: Colors.white, fontSize: 18)),
+            const SizedBox(height: 12),
+            // Songs List
+            songs.isEmpty
+                ? const Center(child: CircularProgressIndicator())
+                : ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: songs.length,
+                    itemBuilder: (context, index) {
+                      final song = songs[index];
+                      return GestureDetector(
+                        onTap: () => onPlaySong(song),
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 16),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  Container(
+                                    height: 50,
+                                    width: 50,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      image: DecorationImage(
+                                        image: NetworkImage(song['thumbnail']),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 12),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(song['title'],
+                                          style: const TextStyle(
+                                              color: Colors.white)),
+                                      Text(song['artist'],
+                                          style: const TextStyle(
+                                              color: Colors.grey)),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              Text(song['duration'],
+                                  style: const TextStyle(color: Colors.grey)),
+                              const Icon(Icons.more_vert, color: Colors.grey),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+            const SizedBox(height: 20),
+          ],
+        ),
       ),
     );
   }
