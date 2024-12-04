@@ -151,7 +151,6 @@ class HomePageContent extends StatelessWidget {
             const Text('Checkout the Latest Songs!',
                 style: TextStyle(color: Colors.white, fontSize: 18)),
             const SizedBox(height: 12),
-            // Songs List
             songs.isEmpty
                 ? const Center(child: CircularProgressIndicator())
                 : ListView.builder(
