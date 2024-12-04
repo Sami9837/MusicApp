@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../api/music_api.dart';
 import '../widgets/floating_music_player.dart';
+import 'music_player_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
