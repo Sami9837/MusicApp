@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import '../api/music_api.dart';
 import '../widgets/floating_music_player.dart';
+import '../widgets/bottom_navbar.dart'; // Import the new BottomNavBar widget
 import 'music_player_page.dart';
+import '';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -36,6 +38,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  // List of pages for Bottom Navigation Bar
   List<Widget> _pages() => [
         HomePageContent(
           songs: songs,
@@ -79,39 +82,16 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      body: _pages()[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        backgroundColor: const Color(0xFFE9BCB9),
-        selectedItemColor: Colors.black,
-        unselectedItemColor: Colors.black,
-        showSelectedLabels: true,
-        showUnselectedLabels: true,
-        type: BottomNavigationBarType.fixed,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.library_music),
-            label: 'Library',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
+      body: _pages()[_selectedIndex], // Show pages based on selected index
+      bottomNavigationBar: BottomNavBar(
+        selectedIndex: _selectedIndex,
+        onItemTapped: _onItemTapped, // Pass index and callback
       ),
     );
   }
 }
 
+// HomePageContent widget to display the song list
 class HomePageContent extends StatelessWidget {
   final List<dynamic> songs;
   final Function(dynamic) onPlaySong;
@@ -140,10 +120,6 @@ class HomePageContent extends StatelessWidget {
               child: Row(
                 children: const [
                   SizedBox(width: 12),
-                  SizedBox(
-                    height: 24,
-                    width: 24,
-                  ),
                   Icon(Icons.search, color: Colors.black),
                   SizedBox(width: 8),
                   Expanded(
