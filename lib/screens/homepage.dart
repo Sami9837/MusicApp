@@ -127,27 +127,28 @@ class HomePageContent extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              height: 50,
+              height: 45,
+              width: 359,
               decoration: BoxDecoration(
-                color: const Color(0xFF2A2B4D),
-                borderRadius: BorderRadius.circular(10),
+                color: const Color(0xFFE9B9BF),
+                borderRadius: BorderRadius.circular(20),
               ),
               child: Row(
                 children: const [
                   SizedBox(width: 12),
-                  Icon(Icons.search, color: Colors.white),
+                  Icon(Icons.search, color: Colors.black),
                   SizedBox(width: 8),
                   Expanded(
                     child: TextField(
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(color: Colors.black),
                       decoration: InputDecoration(
                         hintText: 'Search',
-                        hintStyle: TextStyle(color: Colors.grey),
+                        hintStyle: TextStyle(color: Colors.black),
                         border: InputBorder.none,
                       ),
                     ),
                   ),
-                  Icon(Icons.mic, color: Colors.white),
+                  Icon(Icons.mic, color: Colors.black),
                   SizedBox(width: 12),
                 ],
               ),
