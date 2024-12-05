@@ -61,13 +61,19 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Row(
-          children: [
-            Image.asset('assets/logo.png', height: 30),
-            const SizedBox(width: 8),
-            const Text('Raag',
-                style: TextStyle(color: Color(0xFFE9A6A6), fontSize: 22)),
-          ],
+        title: Center(
+          child: Row(
+            mainAxisSize:
+                MainAxisSize.min, // Center content by minimizing width
+            children: [
+              Image.asset('assets/logo.png', height: 30),
+              const SizedBox(width: 8),
+              const Text(
+                'Raag',
+                style: TextStyle(color: Color(0xFFF39F59), fontSize: 24),
+              ),
+            ],
+          ),
         ),
       ),
       body: _pages()[_selectedIndex],
