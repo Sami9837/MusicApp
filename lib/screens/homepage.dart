@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import '../api/music_api.dart';
 import '../widgets/floating_music_player.dart';
-import '../widgets/bottom_navbar.dart'; // Import the new BottomNavBar widget
+import '../widgets/bottom_navbar.dart';
 import 'music_player_page.dart';
-import '';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -38,7 +37,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // List of pages for Bottom Navigation Bar
   List<Widget> _pages() => [
         HomePageContent(
           songs: songs,
@@ -82,16 +80,15 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      body: _pages()[_selectedIndex], // Show pages based on selected index
+      body: _pages()[_selectedIndex],
       bottomNavigationBar: BottomNavBar(
         selectedIndex: _selectedIndex,
-        onItemTapped: _onItemTapped, // Pass index and callback
+        onItemTapped: _onItemTapped,
       ),
     );
   }
 }
 
-// HomePageContent widget to display the song list
 class HomePageContent extends StatelessWidget {
   final List<dynamic> songs;
   final Function(dynamic) onPlaySong;
