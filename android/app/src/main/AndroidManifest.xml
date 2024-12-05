@@ -1,8 +1,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<!-- internet connection -->
+        <uses-permission android:name="android.permission.INTERNET" />
     <application
-        android:label="music_apk"
+        android:label="Raag"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <application
+    android:usesCleartextTraffic="true"
+    ... >
+        
+        
         <activity
             android:name=".MainActivity"
             android:exported="true"
