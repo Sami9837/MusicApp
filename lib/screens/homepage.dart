@@ -63,8 +63,7 @@ class _HomePageState extends State<HomePage> {
         elevation: 0,
         title: Center(
           child: Row(
-            mainAxisSize:
-                MainAxisSize.min, // Center content by minimizing width
+            mainAxisSize: MainAxisSize.min,
             children: [
               Image.asset('assets/logo.png', height: 30),
               const SizedBox(width: 8),
