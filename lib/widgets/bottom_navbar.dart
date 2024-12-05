@@ -12,41 +12,47 @@ class BottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      currentIndex: selectedIndex,
-      onTap: onItemTapped,
-      backgroundColor: const Color(0xFFE9BCB9),
-      selectedItemColor: Colors.black,
-      unselectedItemColor: Colors.black,
-      showSelectedLabels: true,
-      showUnselectedLabels: true,
-      type: BottomNavigationBarType.fixed,
-      items: [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Home',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.search),
-          label: 'Search',
-        ),
-        BottomNavigationBarItem(
-          icon: Image.asset(
-            'assets/icons/library.png',
-            width: 22,
-            height: 22,
+    return ClipRRect(
+      borderRadius: const BorderRadius.only(
+        topLeft: Radius.circular(15),
+        topRight: Radius.circular(15),
+      ),
+      child: BottomNavigationBar(
+        currentIndex: selectedIndex,
+        onTap: onItemTapped,
+        backgroundColor: const Color(0xFFE9BCB9),
+        selectedItemColor: Colors.black,
+        unselectedItemColor: Colors.black,
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
+        type: BottomNavigationBarType.fixed,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
           ),
-          label: 'Library',
-        ),
-        BottomNavigationBarItem(
-          icon: Image.asset(
-            'assets/icons/profile.png',
-            width: 22,
-            height: 22,
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Search',
           ),
-          label: 'Profile',
-        ),
-      ],
+          BottomNavigationBarItem(
+            icon: Image.asset(
+              'assets/icons/library.png',
+              width: 22,
+              height: 22,
+            ),
+            label: 'Library',
+          ),
+          BottomNavigationBarItem(
+            icon: Image.asset(
+              'assets/icons/profile.png',
+              width: 22,
+              height: 22,
+            ),
+            label: 'Profile',
+          ),
+        ],
+      ),
     );
   }
 }
