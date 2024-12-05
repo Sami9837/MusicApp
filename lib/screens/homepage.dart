@@ -65,11 +65,15 @@ class _HomePageState extends State<HomePage> {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Image.asset('assets/logo.png', height: 30),
+              Image.asset('assets/logo.png', height: 25),
               const SizedBox(width: 8),
               const Text(
                 'Raag',
-                style: TextStyle(color: Color(0xFFF39F59), fontSize: 24),
+                style: TextStyle(
+                    color: Color(0xFFF39F59),
+                    fontSize: 24,
+                    fontFamily: 'KumbhSans',
+                    fontWeight: FontWeight.bold),
               ),
             ],
           ),
@@ -79,11 +83,11 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
-        backgroundColor: const Color(0xFFE9A6A6),
+        backgroundColor: const Color(0xFFE9BCB9),
         selectedItemColor: Colors.black,
-        unselectedItemColor: Colors.grey,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
+        unselectedItemColor: Colors.black,
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
         type: BottomNavigationBarType.fixed,
         items: const [
           BottomNavigationBarItem(
@@ -136,6 +140,10 @@ class HomePageContent extends StatelessWidget {
               child: Row(
                 children: const [
                   SizedBox(width: 12),
+                  SizedBox(
+                    height: 24,
+                    width: 24,
+                  ),
                   Icon(Icons.search, color: Colors.black),
                   SizedBox(width: 8),
                   Expanded(
