@@ -65,7 +65,7 @@ class PlaylistCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: Colors.black.withOpacity(0.1),
+        color: Colors.black.withOpacity(0.05),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -2,8 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class SoundCloudApi {
-  final String apiUrl =
-      'https://api.example.com/songs'; // Replace with actual API
+  final String apiUrl = 'https://api.example.com/songs';
 
   Future<List<dynamic>> fetchSongs() async {
     try {
