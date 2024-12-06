@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import '../api/music_api.dart';
+import 'package:music_apk/widgets/playlist_card.dart';
+import 'package:music_apk/widgets/song_list.dart';
+import 'package:music_apk/api/music_api.dart';
 import '../widgets/bottom_navbar.dart';
 import 'music_player_page.dart';
-
-import '../screens/search_page.dart';
-import '../screens/library_page.dart';
-import '../screens/profile_page.dart';
+import 'search_page.dart';
+import 'library_page.dart';
+import 'profile_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -25,7 +26,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> fetchSongs() async {
-    final fetchedSongs = await MusicApi().fetchSongs();
+    final fetchedSongs = await SoundCloudApi().fetchSongs();
     setState(() {
       songs = fetchedSongs;
     });
@@ -137,69 +138,17 @@ class HomePageContent extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
+            const PlaylistSection(),
+            const SizedBox(height: 20),
             const Text(
               'Checkout the Latest Songs!',
               style: TextStyle(color: Colors.white, fontSize: 18),
             ),
             const SizedBox(height: 12),
-            songs.isEmpty
-                ? const Center(child: CircularProgressIndicator())
-                : ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: songs.length,
-                    itemBuilder: (context, index) {
-                      final song = songs[index];
-                      return GestureDetector(
-                        onTap: () => onPlaySong(song),
-                        child: Padding(
-                          padding: const EdgeInsets.only(bottom: 16),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  Container(
-                                    height: 50,
-                                    width: 50,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8),
-                                      image: DecorationImage(
-                                        image: NetworkImage(song['thumbnail']),
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 12),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        song['title'],
-                                        style: const TextStyle(
-                                            color: Colors.white),
-                                      ),
-                                      Text(
-                                        song['artist'],
-                                        style:
-                                            const TextStyle(color: Colors.grey),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              Text(
-                                song['duration'],
-                                style: const TextStyle(color: Colors.grey),
-                              ),
-                              const Icon(Icons.more_vert, color: Colors.grey),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  ),
+            SongListingSection(
+              songs: songs,
+              onPlaySong: onPlaySong,
+            ),
           ],
         ),
       ),
