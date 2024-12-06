@@ -19,7 +19,7 @@ class PlaylistSection extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: 2),
         Row(
           children: [
             Flexible(
