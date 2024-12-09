@@ -224,7 +224,7 @@ class HomePageContent extends StatelessWidget {
                                   fontFeatures: [FontFeature.tabularFigures()],
                                 ),
                               ),
-                              const SizedBox(width: 10),
+                              const SizedBox(width: 40),
                               const Icon(Icons.more_vert, color: Colors.white),
                             ],
                           ),
