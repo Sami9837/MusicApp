@@ -77,7 +77,7 @@ class _HomePageState extends State<HomePage> {
                     const Text(
                       'Raag',
                       style: TextStyle(
-                          color: Color(0xFFF39F59),
+                          color: Color.fromRGBO(243, 159, 89, 1),
                           fontSize: 24,
                           fontFamily: 'KumbhSans',
                           fontWeight: FontWeight.bold),
@@ -94,9 +94,15 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
+  MusicPlayerPage({required SongEntity songEntity}) {}
 }
 
-MusicPlayerPage({required SongEntity songEntity}) {}
+String formatDuration(int seconds) {
+  int minutes = seconds ~/ 60;
+  int remainingSeconds = seconds % 60;
+  return '${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}'; // Format as MM:SS
+}
 
 class HomePageContent extends StatelessWidget {
   final List<dynamic> songs;
@@ -120,7 +126,7 @@ class HomePageContent extends StatelessWidget {
               height: 45,
               width: double.infinity,
               decoration: BoxDecoration(
-                color: const Color(0xFFE9B9BF),
+                color: const Color.fromRGBO(233, 185, 191, 1),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Row(
@@ -150,7 +156,7 @@ class HomePageContent extends StatelessWidget {
               'Checkout the Latest Songs!',
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: Color(0xFFE9BCB9),
+                color: Color.fromRGBO(233, 188, 185, 1),
                 fontSize: 24,
                 fontWeight: FontWeight.w600,
                 fontFamily: 'kumbh Sans',
@@ -165,6 +171,10 @@ class HomePageContent extends StatelessWidget {
                     itemCount: songs.length,
                     itemBuilder: (context, index) {
                       final song = songs[index];
+                      final durationInSeconds = song['duration'] is String
+                          ? int.tryParse(song['duration']) ?? 0
+                          : song['duration'] ?? 0;
+
                       return GestureDetector(
                         onTap: () => onPlaySong(song),
                         child: Padding(
@@ -215,7 +225,7 @@ class HomePageContent extends StatelessWidget {
                               ),
                               const Spacer(),
                               Text(
-                                song['duration'],
+                                formatDuration(durationInSeconds),
                                 style: const TextStyle(
                                   color: Color.fromRGBO(233, 188, 185, 1),
                                   fontFamily: 'KumbhSans',
