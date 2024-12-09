@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:music_apk/widgets/playlist_card.dart';
-import 'package:music_apk/widgets/song_list.dart';
 import 'package:music_apk/api/music_api.dart';
+import 'package:music_apk/widgets/playlist_card.dart';
 import '../widgets/bottom_navbar.dart';
 import 'music_player_page.dart';
 import 'search_page.dart';
@@ -26,7 +25,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> fetchSongs() async {
-    final fetchedSongs = await SoundCloudApi().fetchSongs();
+    final fetchedSongs = await MusicApi().fetchSongs();
     setState(() {
       songs = fetchedSongs;
     });
@@ -42,11 +41,16 @@ class _HomePageState extends State<HomePage> {
         const ProfilePage(),
       ];
 
-  void playSong(song) {
+  void playSong(dynamic song) {
+    SongEntity songEntity = SongEntity(
+      artist: song['artist'],
+      title: song['title'],
+    );
+
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => MusicPlayerPage(song: song),
+        builder: (context) => MusicPlayerPage(songEntity: songEntity),
       ),
     );
   }
@@ -91,6 +95,8 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
+MusicPlayerPage({required SongEntity songEntity}) {}
 
 class HomePageContent extends StatelessWidget {
   final List<dynamic> songs;
@@ -140,10 +146,92 @@ class HomePageContent extends StatelessWidget {
             const SizedBox(height: 20),
             const PlaylistSection(),
             const SizedBox(height: 20),
-            SongList(
-              songs: songs,
-              onPlaySong: onPlaySong,
+            const Text(
+              'Checkout the Latest Songs!',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Color(0xFFE9BCB9),
+                fontSize: 24,
+                fontWeight: FontWeight.w600,
+                fontFamily: 'kumbh Sans',
+              ),
             ),
+            const SizedBox(height: 12),
+            songs.isEmpty
+                ? const Center(child: CircularProgressIndicator())
+                : ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: songs.length,
+                    itemBuilder: (context, index) {
+                      final song = songs[index];
+                      return GestureDetector(
+                        onTap: () => onPlaySong(song),
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 16),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  Container(
+                                    height: 50,
+                                    width: 50,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      image: DecorationImage(
+                                        image: NetworkImage(song['thumbnail']),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 12),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        song['title'],
+                                        textAlign: TextAlign.center,
+                                        style: const TextStyle(
+                                            fontSize: 16,
+                                            fontFamily: 'kumbh Sans',
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.white),
+                                      ),
+                                      Text(
+                                        song['artist'],
+                                        textAlign: TextAlign.center,
+                                        style: const TextStyle(
+                                            fontSize: 10,
+                                            fontFamily: 'kumbh Sans',
+                                            fontWeight: FontWeight.w600,
+                                            color: Color.fromARGB(
+                                                243, 159, 89, 1)),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              const Spacer(),
+                              Text(
+                                song['duration'],
+                                style: const TextStyle(
+                                  color: Color.fromRGBO(233, 188, 185, 1),
+                                  fontFamily: 'KumbhSans',
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  fontFeatures: [FontFeature.tabularFigures()],
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              const Icon(Icons.more_vert, color: Colors.white),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
           ],
         ),
       ),
