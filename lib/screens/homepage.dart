@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:music_apk/api/music_api.dart';
 import 'package:music_apk/widgets/playlist_card.dart';
 import '../widgets/bottom_navbar.dart';
@@ -17,6 +18,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   List<dynamic> songs = [];
+  AudioPlayer _audioPlayer = AudioPlayer();
 
   @override
   void initState() {
@@ -41,16 +43,21 @@ class _HomePageState extends State<HomePage> {
         const ProfilePage(),
       ];
 
-  void playSong(dynamic song) {
+  void playSong(dynamic song) async {
+    print("Playing song: ${song['title']}");
+    await _audioPlayer.stop();
+    final songUrl = '${AppURLs.songAPI}${song['artist']}/${song['title']}.mp3';
+    await _audioPlayer.play(songUrl as Source);
+
     SongEntity songEntity = SongEntity(
       artist: song['artist'],
       title: song['title'],
     );
-
+    print("Navigating to music player page");
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => MusicPlayerPage(songEntity: songEntity),
+        builder: (context) => SongPlayerPage(songEntity: songEntity),
       ),
     );
   }
@@ -59,6 +66,12 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _audioPlayer.dispose();
   }
 
   @override
@@ -101,7 +114,7 @@ class _HomePageState extends State<HomePage> {
 String formatDuration(int seconds) {
   int minutes = seconds ~/ 60;
   int remainingSeconds = seconds % 60;
-  return '${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}'; // Format as MM:SS
+  return '${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
 }
 
 class HomePageContent extends StatelessWidget {

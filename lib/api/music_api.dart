@@ -16,7 +16,7 @@ class MusicApi {
                   "title": song["title"]?.toString() ?? "Unknown Title",
                   "artist": song["artist"]?.toString() ?? "Unknown Artist",
                   "thumbnail": song["thumbnail"]?.toString() ??
-                      "https://task-4-0pfy.onrender.com/songs/images",
+                      "https://res.cloudinary.com/dovwlptmy/image/upload/v1733651638/songs/fe0wajb8omw3squia5bn.jpg",
                   "duration": song["duration"]?.toString() ?? "0:00",
                 })
             .toList();

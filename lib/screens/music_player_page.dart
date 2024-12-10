@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:just_audio/just_audio.dart'; // For audio playback
+import 'package:just_audio/just_audio.dart';
 
-// Constants
 class AppURLs {
   static const songAPI = 'https://task-4-0pfy.onrender.com/songs/';
-  static const coverAPI = 'https://task-4-0pfy.onrender.com/covers/';
+  static const coverAPI = 'https://task-4-0pfy.onrender.com/songs/';
 }
 
 class AppColors {
-  static const primary =
-      Colors.blue; // Replace with your preferred primary color
+  static const primary = Colors.blue;
 }
 
-// SongEntity
 class SongEntity {
   final String artist;
   final String title;
@@ -21,7 +18,6 @@ class SongEntity {
   SongEntity({required this.artist, required this.title});
 }
 
-// SongPlayerState
 abstract class SongPlayerState {}
 
 class SongPlayerInitial extends SongPlayerState {}
@@ -32,7 +28,6 @@ class SongPlayerLoaded extends SongPlayerState {}
 
 class SongPlayerError extends SongPlayerState {}
 
-// SongPlayerCubit
 class SongPlayerCubit extends Cubit<SongPlayerState> {
   final AudioPlayer audioPlayer = AudioPlayer();
   Duration songPosition = Duration.zero;
@@ -66,7 +61,6 @@ class SongPlayerCubit extends Cubit<SongPlayerState> {
   }
 }
 
-// FavoriteButton Widget
 class FavoriteButton extends StatelessWidget {
   final SongEntity songEntity;
 
@@ -76,14 +70,11 @@ class FavoriteButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
       icon: const Icon(Icons.favorite_border),
-      onPressed: () {
-        // Add your favorite toggle logic here
-      },
+      onPressed: () {},
     );
   }
 }
 
-// SongPlayerPage
 class SongPlayerPage extends StatelessWidget {
   final SongEntity songEntity;
 
