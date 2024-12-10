@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
 
 class AppURLs {
-  static const songAPI = 'https://task-4-0pfy.onrender.com/songs/';
-  static const coverAPI = 'https://task-4-0pfy.onrender.com/songs/';
+  static const songAPI = 'https://task-4-0pfy.onrender.com/songs';
+  static const coverAPI = 'https://task-4-0pfy.onrender.com/songs';
 }
 
 class AppColors {
